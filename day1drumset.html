@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Day 1- JS Drum Kit</title>
+  <link rel="stylesheet" href="css/day1drumset.css">
+</head>
+<body>
+
+    <h1>Day One: Drum Set</h1>
+
+  <div class="keys">
+    <div data-key="65" class="key">
+      <kbd>A</kbd>
+      <span class="sound">clap</span>
+    </div>
+    <div data-key="83" class="key">
+      <kbd>S</kbd>
+      <span class="sound">hihat</span>
+    </div>
+    <div data-key="68" class="key">
+      <kbd>D</kbd>
+      <span class="sound">kick</span>
+    </div>
+    <div data-key="70" class="key">
+      <kbd>F</kbd>
+      <span class="sound">openhat</span>
+    </div>
+    <div data-key="71" class="key">
+      <kbd>G</kbd>
+      <span class="sound">boom</span>
+    </div>
+    <div data-key="72" class="key">
+      <kbd>H</kbd>
+      <span class="sound">ride</span>
+    </div>
+    <div data-key="74" class="key">
+      <kbd>J</kbd>
+      <span class="sound">snare</span>
+    </div>
+    <div data-key="75" class="key">
+      <kbd>K</kbd>
+      <span class="sound">tom</span>
+    </div>
+    <div data-key="76" class="key">
+      <kbd>L</kbd>
+      <span class="sound">tink</span>
+    </div>
+  </div>
+
+  <audio data-key="65" src="sounds/clap.wav"></audio>
+  <audio data-key="83" src="sounds/hihat.wav"></audio>
+  <audio data-key="68" src="sounds/kick.wav"></audio>
+  <audio data-key="70" src="sounds/openhat.wav"></audio>
+  <audio data-key="71" src="sounds/boom.wav"></audio>
+  <audio data-key="72" src="sounds/ride.wav"></audio>
+  <audio data-key="74" src="sounds/snare.wav"></audio>
+  <audio data-key="75" src="sounds/tom.wav"></audio>
+  <audio data-key="76" src="sounds/tink.wav"></audio>
+
+<script>
+//NOTES ON BELOW EVENT LISTENER/FUNCTION
+//this is adding an event listener for a key down and then a function to do something when key is pressed
+//if just console logging e.keyCode it tells you the key code of the specific key your pressed
+//this code is asking, is there an audio element in this code that has said key code?
+//use queryselector bc we are just looking for ONE- use queryselectorAll if looking for many
+//using an attribute selector in audio [data-key= blah] and template literals to use the variable of the event key code that you pressed
+//need to put "" around key variable- this looks for the audio selector with the key-attribute of whatever key you pressed
+//now when you hit the key you will get that coresponding audio element from above- iif you hit key not associated you get null so you need to write an if statement that if its a key without audio element connected it will return- stop the code and go back to the begining 
+
+
+function playSound(e){
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+    if(!audio) return; //stops function if key not connected to audio
+    audio.currentTime=0; //rewind to start to play keys repeatedly
+    audio.play();
+    key.classList.add('playing');
+    
+};
+
+//HIT BUTTON REPEATEDLY
+//bug- if you repetedly call .play() on an audio element that is already playing it wont play until the audio finishes
+//so you want to rewind it to the start before using play so if you hit it again and again it will let you - adding audio.currentTime=0
+
+//ADD JS ANIMATION
+//want to query for the class of key in the div- look for element with the class of key and still look for the key code you pressed     const key = document.querySelector(`.key[data-key="${e.keyCode}"]`)
+//now to use this we use key.classList.add('playing'); to add that css class while hiting the key
+
+//REMOVE ANIMATION
+// we also need to remove and toggle it- dont set a setTimeOut function- bc it can become unaligned with css timing- add a transitionEnd event that will fire when the animation ends- transitionEnd says it has finished transitioning- 
+//to do this we will queryselectorAll because we want all the keys to be listened to- this gives us an array of every element that is matched
+//want to run transitionEnd for each one- can just add event listener to end it bc when you have an array of elements you have to loop through each one and then attach said event listener to the one you want
+
+function removeTransition(e) {
+    if (e.propertyName !== 'transform') return; //skip if not transform
+    this.classList.remove('playing');
+}
+
+//keep event listeners together and seporate from functions
+
+const keys = document.querySelectorAll('.key');
+keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+window.addEventListener('keydown', playSound);
+//each key will get an eventlistener for transitionend and when the funtion runs it will removeTransition using the function above
+//when this function runs you will get a bunch of transition end events because multiple things were changed (color, size, fade, glow etc)
+//pick the longest one to focus on (transform) if(e.propertyName !== 'transform') return; so this will skip unless the event property name is transform
+//then use this (IF YOU ARENT SURE WHAT THIS IS REFERING TO CONSOLE LOG IT AND IT WILL TELL YOU)
+//in this case this refers to the key div so you want to remove the class of playing
+
+</script>
+
+
+</body>
+</html>
