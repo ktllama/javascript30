@@ -23,6 +23,26 @@
     <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
 
     <style>
+        /* define the variable and set default values -- is the equive of $ in sass for defining variables*/
+        :root {
+            --base: #ffc600;
+            --spacing: 10px;
+            --blue: 10px;
+        }
+
+        .hl {
+            color: var(--base);
+        }
+
+        /*use variables */
+
+        img {
+            padding: var(--spacing);
+            background: var(--base);
+            filter: blur(var(--blur));
+
+        }
+
         /*
       misc styles, nothing to do with CSS variables
     */
@@ -46,6 +66,37 @@
     </style>
 
     <script>
+        // const spacing = document.getElementById('spacing');
+        // const blur = document.getElementById('blur');
+        // const base = document.getElementById('base');
+
+        // to select all the input controls on the page use...
+        //query selector gives you an array (really a node list not an array)
+        const inputs = document.querySelectorAll('.controls input');
+
+        //have to select variable- to do this select entire document (root) and then the property of space, blur, base
+        //select that from the name atrb of the input
+
+
+        function handleUpdate() {
+            const suffix = this.dataset.sizing || '';
+            //dataset is an object that will contain all the data attributes for said specifi element- we made a data atrib for the suffix (px) of each element
+            //right now we just have one data atrb but if you have more than one it will show an object of all of them
+            //using || or and empty  '' for nothing- because two have the px but the color doesnt have a dataset so it will become null- have to let it know nothing is an option
+
+
+            //have to select variable- to do this select entire document (root) and then the property of space, blur, base
+            //select that from the name atrb of the input- and write like this with templit to call the name and set the value
+            document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix)
+            //with just value the blue value changes but there is no px on the end so we have to add the suffic var
+
+        }
+
+        inputs.forEach(input => input.addEventListener('change', handleUpdate));
+        //this changes when you set the range but as you drag it it doesnt trigger a change so we can also add
+        inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
+
+
     </script>
 
 </body>
