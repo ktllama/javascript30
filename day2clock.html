@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>JS + CSS Clock</title>
+</head>
+
+<body>
+
+
+  <div class="clock">
+    <div class="clock-face">
+      <div class="hand hour-hand"></div>
+      <div class="hand min-hand"></div>
+      <div class="hand second-hand"></div>
+    </div>
+  </div>
+
+
+  <style>
+    html {
+      background: #018DED url(https://unsplash.it/1500/1000?image=881&blur=5);
+      background-size: cover;
+      font-family: 'helvetica neue';
+      text-align: center;
+      font-size: 10px;
+    }
+
+    body {
+      margin: 0;
+      font-size: 2rem;
+      display: flex;
+      flex: 1;
+      min-height: 100vh;
+      align-items: center;
+    }
+
+    .clock {
+      width: 30rem;
+      height: 30rem;
+      border: 20px solid white;
+      border-radius: 50%;
+      margin: 50px auto;
+      position: relative;
+      padding: 2rem;
+      box-shadow:
+        0 0 0 4px rgba(0, 0, 0, 0.1),
+        inset 0 0 0 3px #EFEFEF,
+        inset 0 0 10px black,
+        0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .clock-face {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform: translateY(-3px);
+      /* account for the height of the clock hands */
+    }
+
+    .hand {
+      width: 50%;
+      height: 6px;
+      background: black;
+      position: absolute;
+      top: 50%;
+      transform-origin: 100%;
+      transform: rotate(90deg);
+      transition: all 0.05s;
+      transition-timing-function: ease-in-out;
+    }
+
+    /* initially the clock hand is rotating in the middle(50%)- but we want it to rotate at the end so it gives the spinning clock effect so we will use transform origin to 100% - will put pivot point on right hand side
+    
+    transform rotate 90deg will make them facing up bc by default it is along x axis
+    
+    transition all 0.5 seconds will make the ticking transition
+
+    transition-timing-function: ease-in-out; will make the tick smoooooother
+
+    cubic-bezier style in dev tools you can make it tick funny and set it in style sheet- this gives us the realistic ticking feature of kind of ticking forward then back a little 
+    
+    */
+  </style>
+
+  <script>
+
+    const secondHand = document.querySelector('.second-hand');
+    //grabbing the css class for the second hand to plug into the function
+    const minuteHand = document.querySelector('.min-hand');
+    const hourHand = document.querySelector('.hour-hand');
+
+    const setDate = () => {
+      const now = new Date();
+      const seconds = now.getSeconds();
+      const secondsDegrees = ((seconds / 60) * 360) + 90; //seconds/60 will give us the % of the 360 circle the hand should be and then multiplying it by 360 will give the actual degree it should be at at that second- then the +90 is to offset the fact that we changed it 90 to start up and down
+      secondHand.style.transform = `rotate(${secondsDegrees}deg)` //setting style to rotate and a templit set to whatever that degree the second is at
+
+
+      const minutes = now.getMinutes();
+      const minutesDegrees = ((minutes / 60) * 360) + 90;
+      minuteHand.style.transform = `rotate(${minutesDegrees}deg)`
+      // console.log(minutes);
+
+      const hours = now.getHours();
+      const hoursDegrees = ((hours / 12) * 360) + 90;
+      hourHand.style.transform = `rotate(${hoursDegrees}deg)`
+      console.log(hours);
+
+
+    }
+
+    //below is how you set something to run every second- so now this functions setdate runs every second
+    setInterval(setDate, 1000);
+
+  </script>
+</body>
+
+</html>
