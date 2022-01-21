@@ -71,6 +71,16 @@
 
         // 7. sort Exercise
         // Sort the people alphabetically by last name
+        const alpha = people.sort((lastOne, nextOne) => {
+            const [alast, afirst] = lastOne.split(', ');
+            const [blast, bfirst] = nextOne.split(', ');
+            //this will split the names into two items in the array (first and last name)
+            //we are going to destructure so rather than returning an array each item will return assigned to its own variable
+            return alast > blast ? -1 : 1;
+
+        });
+
+        console.log(alpha);
         // const lastName = people.sort((first, second) => first.)
         // const lastName = people.sort((a, b) => { (a < b) ? 1 : ((a > b) ? -1 : 0) });
         // console.log(lastName);
