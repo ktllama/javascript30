@@ -30,6 +30,7 @@
         .panels {
             min-height: 100vh;
             overflow: hidden;
+            display: flex;
         }
 
         .panel {
@@ -47,6 +48,12 @@
             font-size: 20px;
             background-size: cover;
             background-position: center;
+            flex: 1;
+            /*with flex 1 each flex child will evenly distribute the space among themselves*/
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            flex-direction: column;
         }
 
         .panel1 {
@@ -74,7 +81,29 @@
             margin: 0;
             width: 100%;
             transition: transform 0.5s;
+            flex: 1 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
+
+        .panel>*:first-child {
+            transform: translateY(-100%);
+        }
+
+        .panel.open-active>*:first-child {
+            transform: translateY(0);
+        }
+
+        .panel>*:last-child {
+            transform: translateY(100%);
+        }
+
+        .panel.open-active>*:last-child {
+            transform: translateY(0);
+        }
+
+        /* this will hide the top and bottom words by putting them off screen */
 
         .panel p {
             text-transform: uppercase;
@@ -89,6 +118,9 @@
 
         .panel.open {
             font-size: 40px;
+            flex: 5;
+            /*when the panel has a class of open it will expand left and right
+            flex 5 means when it has this class it will take 5x's the amount of extra room as the other panels*/
         }
     </style>
 
@@ -122,7 +154,30 @@
     </div>
 
     <script>
+        const panels = document.querySelectorAll('.panel');
+        //needs to be All so it gives us a node list of all of the divs w panels
 
+        function toggleOpen() {
+            this.classList.toggle('open');
+            console.log(this);
+        }
+        //this function will togle the panels to have a class of open if clicked (event function below)
+
+        function toggleActive(e) {
+            if (e.propertyName.includes('flex')) {
+                this.classList.toggle('open-active');
+            };
+        };
+
+        //would say propertyName === flex-grow (transition end we want to target), but on safari its only called flex, so we will use includes flex (flex-grow and flex)
+        //need to target flex-grow becasue there are multiple transitions ending
+
+        panels.forEach(panel => panel.addEventListener('click', toggleOpen));
+        //with this it will loop over each one of them, listen for a click for each one of them and if you click a panel it willtrigger the toggle function
+        //not written as toggleOpen() here because that would run on page load- want to give reference to the function so that it knows what to do only when CLICKED
+
+        panels.forEach(panel => panel.addEventListener('transitionend', toggleActive));
+        //now we will listen for the transition end event and toggle class open-active
     </script>
 
 
