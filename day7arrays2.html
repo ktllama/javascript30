@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Array Cardio 💪💪</title>
+</head>
+
+<body>
+    <p><em>Psst: have a look at the JavaScript Console</em> 💁</p>
+    <script>
+        // ## Array Cardio Day 2
+
+        const people = [
+            { name: 'Wes', year: 1988 },
+            { name: 'Kait', year: 1986 },
+            { name: 'Irv', year: 1970 },
+            { name: 'Lux', year: 2015 }
+        ];
+
+        const comments = [
+            { text: 'Love this!', id: 523423 },
+            { text: 'Super good', id: 823423 },
+            { text: 'You are the best', id: 2039842 },
+            { text: 'Ramen is my fav food ever', id: 123523 },
+            { text: 'Nice Nice Nice!', id: 542328 }
+        ];
+
+        // Some and Every Checks
+        // Array.prototype.some() // is at least one person 19 or older?
+        const older = people.map((age) => (2022 - age.year));
+        const isOlder = (age, index, older) => {
+            return (age >= 19);
+        };
+        const someOlder = older.some(isOlder);
+        console.log(someOlder);
+
+        // people.some()
+        // Array.prototype.every() // is everyone 19 or older?
+        const allOlder = older.every(isOlder);
+        console.log(allOlder);
+
+        // Array.prototype.find()
+        // Find is like filter, but instead returns just the one you are looking for
+        //kind of like having map built in but also in order to return what it maps through it needs to meet the condition
+        // find the comment with the ID of 823423
+        const match = comments.find(x => x.id === 823423);
+        console.log(match);
+
+
+        // Array.prototype.findIndex()
+        // Find the comment with this ID
+        // delete the comment with the ID of 823423
+        //like find but returns items index instead of the item itself
+
+        const index = comments.findIndex(x => x.id === 823423);
+        console.log(index);
+
+
+    </script>
+</body>
+
+</html>
