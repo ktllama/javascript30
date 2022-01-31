@@ -7,7 +7,9 @@
 </head>
 
 <body>
-  <canvas id="draw" width="800" height="800"></canvas>
+  <span>click to draw</span>
+  <canvas id="draw" width="800" height="800">
+  </canvas>
   <!-- This canvas element allows us to draw on the page- good for signatures- like microsoft paint where you get a block of pixels and you draw on the context- not canvas element itself  -->
 
 
@@ -33,9 +35,16 @@
     let lastY = 0;
     //need starting x and y and ending x and y to draw a line
 
+    let hue = 0;
+    //setting up variable to have color change as we draw
+
+    let direction = true;
+
     function draw(e) {
       if (!isDrawing) return; //this will stop the function from running when not mouse down
       console.log(e);
+      ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+      //starts color for stroke style
       ctx.beginPath(); //start from
       ctx.moveTo(lastX, lastY); //go to 
       ctx.lineTo(e.offsetX, e.offsetY);
@@ -43,6 +52,21 @@
       ctx.stroke();
       [lastX, lastY] = [e.offsetX, e.offsetY]
       //updating to be where the last mousedown was
+      hue++;
+      //increments hue number to change color as you draw
+      if (hue >= 360) {
+        hue = 0;
+      }
+      if (ctx.lineWidth >= 100 || ctx.lineWidth <= 1) {
+        direction = !direction;
+      }
+      if (direction) {
+        ctx.lineWidth++;
+      } else {
+        ctx.lineWidth--;
+      };
+      //once the line gets thick or thin (100 or 0) we will flip the direction and use an if statement to incremenet or decremenet size of line
+
     }
     //taking in event and listening for mouse move event on canvas- add event listeners
 
