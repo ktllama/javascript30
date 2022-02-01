@@ -47,15 +47,71 @@
         console.assert(1 === 1, 'This is false'); // if you run this nothing will show up because its true, 1 === 1
         console.assert(2 === 1, 'this is actually false'); //will only display message if the expression is false
 
-    // clearing
+        //can grab an element on a page
+        //if class list doesnt contain that it will throw an error
+        const p = document.querySelector('p');
+        console.assert(p.classList.contains('ouch'), 'that is wrong')
+        //so in general you can text for something and if its not there or wrong/ false it will throw an error
+        //if its true nothing will happen- so you dont need an if statement
 
-    // Viewing DOM Elements
+        // clearing- clear the console
+        console.clear();
 
-    // Grouping together
+        // Viewing DOM Elements
+        //if you console.log a dom element it will show the html in elements
+        console.log(p);
+        //dir will give you a drop down (apparent so will just console logging it)
+        console.dir(p);
+        //in here you can look at class list, data set, children, style, prototype methods and all of the other different properties
 
-    // counting
+        // Grouping together- if you were to loop through an array in the console
+        dogs.forEach(dog => {
+            console.log(`This is ${dog.name}`);
+            console.log(`${dog.name} is ${dog.age} years old`);
+            console.log(`${dog.name} is ${dog.age * 7} dog years old`);
+        })
+        //this will console first dog and second dog for first console then continue... if you want to group them so it runs through the entire list of console.log and group it for each dog you write it like this
 
-    // timing
+        dogs.forEach(dog => {
+            console.group(`${dog.name}`);
+            console.log(`This is ${dog.name}`);
+            console.log(`${dog.name} is ${dog.age} years old`);
+            console.log(`${dog.name} is ${dog.age * 7} dog years old`);
+            console.groupEnd(`${dog.name}`);
+        })
+
+        // if you want them to be collapsed on console log you write like this
+        dogs.forEach(dog => {
+            console.groupCollapsed(`${dog.name}`);
+            console.log(`This is ${dog.name}`);
+            console.log(`${dog.name} is ${dog.age} years old`);
+            console.log(`${dog.name} is ${dog.age * 7} dog years old`);
+            console.groupEnd(`${dog.name}`);
+        })
+
+        // counting- will count how many times you use a specific word, number, object, dom node, anything 
+        console.count('Katie');
+        console.count('Llama');
+        console.count('Katie');
+        console.count('Katie');
+        console.count('Llama');
+        console.count('Katie');
+        console.count('Katie');
+
+        // timing- if you want to see how long something takes
+        //first start a timer
+        console.time('fetching data');
+        fetch('https://api.github.com/users/wesbos')
+            .then(data => data.json())
+            .then(data => {
+                console.timeEnd('fetching data');
+                console.log(data);
+            })
+
+        //need to pass console.timeEnd the same string that you used to start it
+
+        //table- can take an array of objects and display it in a table0 assuming they all have the same properties it will look nice
+        console.table(dogs);
 
     </script>
 </body>
