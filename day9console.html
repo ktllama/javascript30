@@ -19,19 +19,33 @@
             p.style.fontSize = '50px';
         }
 
-    // Regular
+        //SETTING BREAKPOINT OFF OF AN ELEMENT TO UNDERSTAND JS BEHIND IT
+        //to look at the javascript running in your page, inspect > find the element in the DOM the javascript is suspected to be running on (because there is an event change or something) > break on it (left click>breakon>attribute modification)- this will now set a debugger on this element when the js tries to run so you can step into the code (by doing this youre setting a breakpoint)- will show you where the line of code is having the js act on
+        //to take off go back to break on in elements panel like before and unselect attribute modification
 
-    // Interpolated
 
-    // Styled
+        //CONSOLE.ALLLTHESETHINGS LIST
+        // Regular
+        console.log('consolelog');
 
-    // warning!
+        // Interpolated- can interpolate values into it
+        console.log('Hello I am a %s string!', 'interpolated'); //dont need as much anymore since we have es6 backticks
 
-    // Error :|
+        // Styled- use %c to style text- first is the thing you want to style then after the , is the style rules (each rule seporated by ; - last one needs to end with ;)
+        console.log('%c styled text here', 'font-size:50px; background:pink; text-shadow: 3px 3px 0 grey;')
 
-    // Info
 
-    // Testing
+        // warning!- give us a warning and tell us the stack trace as to where it got called
+        console.warn('this is a warning display');
+        // Error :|- wont throw an error will just display an error in the console- with stack trace
+        console.error('this is an error display');
+
+        // Info- give you a little bit of info- not working
+        console.info('coconuts kill more people than sharks every year');
+
+        // Testing- check if things are true that you console
+        console.assert(1 === 1, 'This is false'); // if you run this nothing will show up because its true, 1 === 1
+        console.assert(2 === 1, 'this is actually false'); //will only display message if the expression is false
 
     // clearing
 
