@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Key Detection</title>
+    <script type="text/javascript" src="https://www.cornify.com/js/cornify.js"></script>
+</head>
+
+<body>
+    <script>
+        const pressed = [] //initiating a pressed keys array
+        const secretCode = 'ktllama'
+
+        window.addEventListener('keyup', (e) => {
+            pressed.push(e.key); //pushes the pressed keys into the array
+            pressed.splice(-secretCode.length - 1, pressed.length - secretCode.length);
+            if (pressed.join('').includes(secretCode)) {
+                console.log("you guessed the code!");
+                cornify_add();
+            } //join turns it from array items into a string
+            console.log(pressed); //this will only allow the number of letters in your secret code to be stored in the array- will start popping the first letters you wrote out of the array and adding the new one
+
+        })
+
+
+    </script>
+</body>
+
+</html>

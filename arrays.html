@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    array practice
+
+    <script>
+        const INSTRUMENT_TYPE_STRING = 0;
+        const INSTRUMENT_TYPE_PERCUSSION = 1;
+        const INSTRUMENT_TYPE_WIND = 2;
+
+        const instruments = [
+            {
+                id: 0,
+                name: 'guitar',
+                type: INSTRUMENT_TYPE_STRING
+            },
+            {
+                id: 1,
+                name: 'xylophone',
+                type: INSTRUMENT_TYPE_PERCUSSION
+            },
+            {
+                id: 2,
+                name: 'zither',
+                type: INSTRUMENT_TYPE_STRING
+            },
+            {
+                id: 3,
+                name: 'bagpipes',
+                type: INSTRUMENT_TYPE_WIND
+            },
+        ];
+
+        const sortItems = (objArr) => {
+            return newArr = [...objArr].sort(function (a, b) {
+                const nameA = a.name;
+                const nameB = b.name;
+                return (nameA < nameB) ? -1 : (nameA > nameB) ? 1 : 0;
+            });
+        }
+        console.log(sortItems(instruments));
+        console.log(instruments);
+
+        const getType = (objArr, type) => objArr.filter(x => x.type === type);
+        console.log(getType(instruments, INSTRUMENT_TYPE_STRING));
+
+        const getName = (objArr) => objArr.map(name => {
+            return `${name.name}`
+        });
+        console.log(getName(instruments));
+
+        console.log(getName(getType(instruments, INSTRUMENT_TYPE_STRING)));
+
+    </script>
+</body>
+
+</html>
