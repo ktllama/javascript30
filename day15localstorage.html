@@ -43,9 +43,13 @@
     </div>
 
     <script>
+        //LOCAL STORAGE- only by computer and broswer- but your browser can save key value pairs by browser and store in local storage
+        //can only use strings in local storage- no objects or arrays
+
         const addItems = document.querySelector('.add-items');
         const itemsList = document.querySelector('.plates');
-        const items = [];
+        const items = JSON.parse(localStorage.getItem('items')) || [];
+        //this will either get the string in local storage and turn to array or have an empty array if nothing is stored in local storage
 
         function addItem(e) {
             e.preventDefault();
@@ -55,8 +59,11 @@
                 text: text,
                 done: false
             };
+
             items.push(item); //pushing item we type in input into items array
             populateList(items, itemsList);
+            localStorage.setItem('items', JSON.stringify(items));
+            //first items is the key and second is a string of items as the value- then can use JSON.parse to take that string and put it back to an array
             this.reset();
             //this is now a form element with the method reset on it
         }
@@ -76,7 +83,9 @@
 
         }
 
-        addItems.addEventListener('submit', addItem)
+        addItems.addEventListener('submit', addItem);
+
+        populateList(items, itemsList);
 
     </script>
 
