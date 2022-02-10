@@ -83,7 +83,20 @@
 
         }
 
+        function toggleDone(e) {
+            if (!e.target.matches('input')) return; //skip passing even unless its an input
+            const el = e.target;
+            const index = el.dataset.index;
+            items[index].done = !items[index].done;
+            localStorage.setItem('items', JSON.stringify(items));
+            populateList(items, itemsList);
+            //changing property, updating in local storage and then updating ui
+        }
+
+        //event delegation- when you create something after the event is listened for it wont run the event listener- so the point of event delegration is rather than listening for a click or change on element directly, we look for something who is going to be on the page at the time of listening- in this case the unordered list- the ul will listen for the event and then pass the event onto the li children
+
         addItems.addEventListener('submit', addItem);
+        itemsList.addEventListener('click', toggleDone);
 
         populateList(items, itemsList);
 
