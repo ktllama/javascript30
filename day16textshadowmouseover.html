@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mouse Shadow</title>
+</head>
+
+<body>
+
+    <div class="hero">
+        <h1 contenteditable>🔥WOAH!</h1>
+        <!-- contenteditable means you can edit content on the screen  -->
+    </div>
+
+    <style>
+        html {
+            color: black;
+            font-family: sans-serif;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: black;
+        }
+
+        h1 {
+            text-shadow: 10px 10px 0 rgba(0, 0, 0, 1);
+            font-size: 100px;
+        }
+    </style>
+
+    <script>
+        //to get the moving shadow effect just updating the style of the h1 tag depending on where your mouse is on the screen
+        //so first we wil listen for the mouse events on the div class hero
+
+        const hero = document.querySelector('.hero');
+        const text = hero.querySelector('h1');
+        const walk = 200; //100px
+
+        //fist in the function we need to get info from the event of the mouse move and find offset left
+        // then we need to get the width and the height of the thing that we have hovered over - the hero div
+        //then we need to find out where the person cursor was - using let  because we need to change/normalize them as seen below
+        //then we need to figure out how far should the text shadow actually go? how many px at its most should it be stretched
+
+        function shadow(e) {
+            // const width = hero.offsetWidth;
+            // const height = hero.offsetHeight;
+            //this can be does easier with es6 destructuring below
+            const { offsetWidth: width, offsetHeight: height } = hero;
+            let { offsetX: x, offsetY: y } = e; //taken off the event- same as e.offsetX
+            // console.log(x, y);
+            //doing this you see when you get to the edge of the div the numbers get closer to 0 but then bounce back to the normal number in context of the whole screen- so we need to do a little normalization
+            //this is how we normalize it... (dealing with x and y is a headache in js)
+            if (this !== e.target) {
+                x = x + e.target.offsetLeft;
+                y = y + e.target.offsetTop;
+            }
+
+            const xWalk = Math.round((x / width * walk) - (walk / 2));
+            const yWalk = Math.round((y / height * walk) - (walk / 2));
+            //now our mouse position on screen is translated from any where from 50 to -50 which we will use to set the px for the shadow
+
+            text.style.textShadow =
+                `${xWalk}px ${yWalk}px 0 red,
+                ${xWalk * -1}px ${yWalk}px 0 yellow,
+                ${yWalk}px ${xWalk * -1}px 0 black,
+                ${yWalk * -1}px ${xWalk}px 0 red
+                `
+
+        }
+
+        hero.addEventListener('mousemove', shadow);
+
+
+
+    </script>
+</body>
+
+</html>
